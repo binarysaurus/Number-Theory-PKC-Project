@@ -1,16 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <body>
 	<h1>MATH 3307 - ELEMENTARY NUMBER THEORY - HONORS PROJECT - JOE CLOUD</h1>
 	<h2>Dr. Epperson's section </h2>
 	<p> This program will encrypt a simple TXT file (Only text files under 1 MB will be accepted).</p>
-	<h4>Upload file to encrypt: </h4>
-	<form action="" method=post enctype=multipart/form-data>
-		<input type=file name=file>
-		<input type=submit value=Upload>
-	</form>
-	<p> <a href="keys/key.txt" download> Download</a> key </p>
-	<p> <a href="uploads/text.txt" download> Download</a> Encrypted file </p>
-	
-</body>
-</html>
+	<h4>Would you like to encrypt or decrypt a file? </h4>
+	<select id="choose_decenc" name="form_select">
+		<option value="0">Encrypt a new file</option>
+		<option value ="1">Decrypt a file w/ key</option>
+	</select>
+	<script>
+		document.getElementById('choose_decenc').addEventListener('change', function () {
+			if (this.value == 0){
+				document.getElementById('encrypt_div').style.display = 'block';
+				document.getElementById('decrypt_div').style.display = 'none';
+			}
+			else{
+				document.getElementById('encrypt_div').style.display = 'none';
+				document.getElementById('decrypt_div').style.display = 'block';
+			}
+
+		});
+	</script>
+	<br &><br &>
+	<div id="encrypt_div" style="display: block;">
+		<form action="" method=post enctype=multipart/form-data>
+			<input type=file name=file>
+			<input type=submit value=Upload>
+		</form>
+		<p> <a href="keys/key.txt" download> Download</a> key <br &>
+			<a href="uploads/text.txt" download> Download</a> Encrypted file </p>
+		</div>
+	<div id="decrypt_div" style="display: none;">
+		<p> this is div 2 </p>
+	</div>
+
+	</body>
+	</html>
