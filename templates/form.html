@@ -30,10 +30,20 @@
 			<input type=submit value=Upload>
 		</form>
 		<p> <a href="keys/key.txt" download> Download</a> key <br &>
-			<a href="uploads/text.txt" download> Download</a> Encrypted file </p>
-		</div>
+			<a href="uploads/text.txt" download> Download</a> encrypted file </p>
+	</div>
+	
 	<div id="decrypt_div" style="display: none;">
-		<p> this is div 2 </p>
+		<p> Upload encrypted file: </p>	
+		<form action="" method=post enctype=multipart/form-data>
+			<input type=file name=file>
+			<input type=submit value=Upload>
+					<p>Upload key: </p>
+			<input type=file name=file>
+			<input type=submit value=Upload>
+		</form>
+
+		<p><a href="uploads/text.txt" download> Download</a> decrypted file </p>
 	</div>
 
 	</body>
