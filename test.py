@@ -34,7 +34,7 @@ def main():
  
         if form.validate():
             # Save the comment here.
-            flash('Encrypted Text: '+str(encryptor(int(str_encrypt))[1]))
+            flash('Encrypted Text: '+str(encryptor(int(str_encrypt))[2]))
         else:
             flash('All the form fields are required. ')
  
