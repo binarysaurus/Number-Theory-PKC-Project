@@ -123,7 +123,6 @@ def decryptor(c, e):
     #decword = toString(m)
     #print("DECWORD  DECODE: ",decword)
     #print("WORDS TO BINARY: ",m)
-    print("ORIGINAL BEFR: ", m)
     #m = int(input("enter an int: "))
 
     decode = pow(c,d,n)
