@@ -24,7 +24,7 @@ class ReusableForm(Form):
 
 
 @app.route("/", methods=['GET', 'POST'])
-def hello():
+def main():
     form = ReusableForm(request.form)
  
     print(form.errors)
