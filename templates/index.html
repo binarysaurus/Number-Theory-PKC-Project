@@ -5,6 +5,10 @@
 	<h1>MATH 3307 - ELEMENTARY NUMBER THEORY - HONORS PROJECT - JOE CLOUD</h1>
 	<h2>Dr. Epperson's section </h2>
 	<p> This program will encrypt a string of digits up to 2^91.</p>
+	<form method="POST">
+		{{ form.name.label }} {{ form.name(id='my-text-field') }}
+		{{ form.submit() }}
+	</form>
 	{% import "bootstrap/wtf.html" as wtf %}
 	{{ wtf.quick_form(form) }}
 	{% extends "base.html" %}
@@ -18,6 +22,6 @@
 	</div>
 	{{ wtf.quick_form(form) }}
 	{% endblock %}
-	
+
 </body>
 </html>s

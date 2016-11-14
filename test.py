@@ -6,7 +6,8 @@ from random import randint
 import binascii
 import struct
 
-from flask import Flask, render_template, flash, request
+from flask import Flask, render_template, flash, request, url_for
+from flask.ext.wtf import Form
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from wtforms.validators import Required
 
