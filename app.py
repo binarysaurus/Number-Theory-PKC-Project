@@ -2,8 +2,11 @@ import os
 from flask import Flask, request, redirect, url_for, render_template
 from werkzeug import secure_filename
 
+WTF_CSRF_ENABLED = True
+SECRET_KEY = 'you-will-never-guess' #unrelated to NT Project, part of Flask-WTF
+
 UPLOAD_FOLDER = 'uploads/'
-ENCRYPTION_FOLDER = 'tempklates/encrypted/'
+ENCRYPTION_FOLDER = 'tempklates/encrypted/' 
 KEY_FOLDER ='templates/keys/'
 ALLOWED_EXTENSIONS = set(['txt'])
 
@@ -15,6 +18,9 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
+
+
+"""
 @app.route("/", methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -26,7 +32,7 @@ def index():
             return redirect(url_for('index'))
             
     return  render_template("form.html")
-
+"""
 def download():
 	return """<html> <body> <p> here is a nice string for ya </p </body> </html>"""
 
