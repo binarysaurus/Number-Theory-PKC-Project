@@ -20,7 +20,7 @@ app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
  
 
 class ReusableForm(Form):
-    name = TextField('Name:', validators=[validators.required()])
+    str_encrypt = TextField('Number to encrypt:', validators=[validators.required()])
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -29,12 +29,12 @@ def main():
  
     print(form.errors)
     if request.method == 'POST':
-        name=request.form['name']
-        print(name)
+        str_encrypt=request.form['str_encrypt']
+        print(str_encrypt)
  
         if form.validate():
             # Save the comment here.
-            flash(str(encryptor(int(name))))
+            flash(str(encryptor(int(str_encrypt))))
         else:
             flash('All the form fields are required. ')
  
