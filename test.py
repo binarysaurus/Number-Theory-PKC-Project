@@ -31,7 +31,7 @@ def main():
  
     print(form.errors)
     if request.method == 'POST':
-        if (request.form['str_encrypt'] != None):
+        if (int(request.form['str_encrypt']) > 1):
             str_encrypt=request.form['str_encrypt']
             print(str_encrypt)
      
