@@ -96,7 +96,7 @@ def decryptor(m, e):
 	n = p * q
 	phi = (p-1)*(q-1)
 	
-		bezout = xgcd(e, phi)
+	bezout = xgcd(e, phi)
 	
 	d = bezout[1]%phi
 	
