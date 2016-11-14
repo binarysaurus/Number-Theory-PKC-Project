@@ -29,12 +29,12 @@ def main():
  
     print(form.errors)
     if request.method == 'POST':
-        strinput=request.form['strinput']
-        print(strinput)
+        name=request.form['name']
+        print(name)
  
         if form.validate():
             # Save the comment here.
-            flash(str(encryptor(int(strinput))))
+            flash(str(encryptor(int(name)))
         else:
             flash('All the form fields are required. ')
  
