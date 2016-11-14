@@ -30,7 +30,7 @@ def hello():
     print(form.errors)
     if request.method == 'POST':
         name=request.form['name']
-        print name
+        print(name)
  
         if form.validate():
             # Save the comment here.
