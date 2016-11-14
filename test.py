@@ -20,7 +20,9 @@ app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
  
 
 class ReusableForm(Form):
-    str_encrypt = TextField('Number to encrypt:', validators=[validators.required()])
+    str_encrypt = TextField('Number to encrypt:')
+    str_decrypt = TextField('Encrypted text   :')
+    str_key     = TextField('Key of Encrypted :')
 
 
 @app.route("/", methods=['GET', 'POST'])

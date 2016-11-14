@@ -17,6 +17,14 @@
             <div class="input submit">
                 <input type="submit" value="Submit" />
             </div>
+
+             <div class="input text">
+                {{ form.str_decrypt.label }} {{ form.str_decrypt }}
+            </div>
+ 
+            <div class="input submit">
+                <input type="submit" value="Submit" />
+            </div>
         </form>
 
         	{% with messages = get_flashed_messages(with_categories=true) %}
