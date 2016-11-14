@@ -44,6 +44,7 @@ def main():
                 flash('All the form fields are required. ')
         elif(request.form['str_decrypt'] != None):
             str_decrypt=request.form['str_decrypt']
+            str_key = request.form['str_key']
             print(str_decrypt)
      
             if form.validate():
