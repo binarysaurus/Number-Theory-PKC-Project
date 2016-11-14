@@ -106,7 +106,7 @@ def encryptor(m):
     print("CIPHERTEXT ENC : ", c)
     return c, e
 
-def decryptor(m, e):
+def decryptor(c, e):
     p = 2**31-1
     q = 2**61-1
     n = p * q
