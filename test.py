@@ -31,16 +31,27 @@ def main():
  
     print(form.errors)
     if request.method == 'POST':
-        str_encrypt=request.form['str_encrypt']
-        print(str_encrypt)
- 
-        if form.validate():
-            # Save the comment here.
-            encrypted_data = encryptor(int(str_encrypt))
-            flash('Encrypted Text: '+str(encrypted_data[0]))
-            flash('Key:            '+str(encrypted_data[1]))
-        else:
-            flash('All the form fields are required. ')
+    	if (request.form['str_encrypt'] != None):
+ 	       str_encrypt=request.form['str_encrypt']
+ 	       print(str_encrypt)
+ 	
+ 	       if form.validate():
+ 	           # Save the comment here.
+ 	           encrypted_data = encryptor(int(str_encrypt))
+ 	           flash('Encrypted Text: '+str(encrypted_data[0]))
+ 	           flash('Key:            '+str(encrypted_data[1]))
+ 	       else:
+ 	           flash('All the form fields are required. ')
+ 	    else if (request.form['str_decrypt'] != None):
+ 	       str_decrypt=request.form['str_decrypt']
+ 	       print(str_decrypt)
+ 	
+ 	       if form.validate():
+ 	           # Save the comment here.
+ 	           decrypted_data = decryptor(int(str_decrypt))
+ 	           flash('Decrypted Text: '+str(decrypted_data))
+ 	       else:
+ 	           flash('All the form fields are required. ') 	    	
  
     return render_template('index.html', form=form)
 
