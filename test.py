@@ -36,7 +36,7 @@ def main():
             # Save the comment here.
             encrypted_data = encryptor(int(str_encrypt))
             flash('Encrypted Text: '+str(encrypted_data[0]))
-            flash('Key: '+str(encrypted_data[1]))
+            flash('Key:            '+str(encrypted_data[1]))
         else:
             flash('All the form fields are required. ')
  
