@@ -62,7 +62,7 @@ def xgcd(b, n):
         y0, y1 = y1, y0 - q * y1
     return  b, x0, y0
 
-def main():
+def encryptor(m):
 	p = 2**31-1
 	q = 2**61-1
 	n = p * q
@@ -83,16 +83,36 @@ def main():
 	#decword = toString(m)
 	#print("DECWORD  DECODE: ",decword)
 	#print("WORDS TO BINARY: ",m)
-	m = 2**91
 	print("ORIGINAL BEFR: ", m)
 	#m = int(input("enter an int: "))
 
 	c = pow(m,e,n)
 	print("CIPHERTEXT ENC : ", c)
+	return c, e
 
+def decryptor(m, e):
+	p = 2**31-1
+	q = 2**61-1
+	n = p * q
+	phi = (p-1)*(q-1)
+	
+		bezout = xgcd(e, phi)
+	
+	d = bezout[1]%phi
+	
+	#words = 'sda'
+	#print("ORIGINAL STRING: ", words)
+	#m = toBinary(words)
+	#print("WORDS TO BINARY: ", m)	
+	#decword = toString(m)
+	#print("DECWORD  DECODE: ",decword)
+	#print("WORDS TO BINARY: ",m)
+	print("ORIGINAL BEFR: ", m)
+	#m = int(input("enter an int: "))
 
 	decode = pow(c,d,n)
 	print("ORIGINAL TEXT IN: ", decode)
+	return decode
 
 
 if __name__ == "__main__":
