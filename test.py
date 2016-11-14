@@ -48,7 +48,7 @@ def main():
      
             if form.validate():
                 # Save the comment here.
-                decrypted_data = decryptor(int(str_decrypt))
+                decrypted_data = decryptor(int(str_decrypt), int(str_key))
                 flash('Decrypted Text: '+str(decrypted_data))
             else:
                 flash('All the form fields are required. ')             
