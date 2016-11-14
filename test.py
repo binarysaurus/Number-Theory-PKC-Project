@@ -42,7 +42,7 @@ def main():
  	           flash('Key:            '+str(encrypted_data[1]))
  	       else:
  	           flash('All the form fields are required. ')
- 	    else (request.form['str_decrypt'] != None):
+		else (request.form['str_decrypt'] != None):
  	       str_decrypt=request.form['str_decrypt']
  	       print(str_decrypt)
  	
