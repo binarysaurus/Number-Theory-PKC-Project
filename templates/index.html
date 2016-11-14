@@ -6,5 +6,26 @@
 	<h2>Dr. Epperson's section </h2>
 	<p> This program will encrypt a string of digits up to 2^91.</p>
 	
+	{% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message[1] }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <form action="" method="post">
+            {{ form.csrf }}
+ 
+            <div class="input text">
+                {{ form.name.label }} {{ form.name }}
+            </div>
+ 
+            <div class="input submit">
+                <input type="submit" value="Submit" />
+            </div>
+        </form>
+
 </body>
 </html>s
