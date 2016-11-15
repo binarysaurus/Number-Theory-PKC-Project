@@ -36,19 +36,18 @@ def main():
             print(str_encrypt)
      
             if form.validate():
-                # Save the comment here.
+
                 encrypted_data = encryptor(int(str_encrypt))
                 flash('Encrypted Text: '+str(encrypted_data[0]))
                 flash('Key:            '+str(encrypted_data[1]))
             else:
                 flash('All the form fields are required. ')
-        elif(request.form['str_decrypt'] != None):
+        elif(request.form['str_decrypt']):
             str_decrypt=request.form['str_decrypt']
             str_key = request.form['str_key']
             print(str_decrypt)
      
             if form.validate():
-                # Save the comment here.
                 decrypted_data = decryptor(int(str_decrypt), int(str_key))
                 flash('Decrypted Text: '+str(decrypted_data))
             else:
@@ -92,15 +91,8 @@ def encryptor(m):
     
     d = bezout[1]%phi
     
-    #words = 'sda'
-    #print("ORIGINAL STRING: ", words)
-    #m = toBinary(words)
-    #print("WORDS TO BINARY: ", m)    
-    #decword = toString(m)
-    #print("DECWORD  DECODE: ",decword)
-    #print("WORDS TO BINARY: ",m)
     print("ORIGINAL BEFR: ", m)
-    #m = int(input("enter an int: "))
+
 
     c = pow(m,e,n)
     print("CIPHERTEXT ENC : ", c)
@@ -116,14 +108,6 @@ def decryptor(c, e):
     
     d = extend_ea[1]%phi
     
-    #words = 'sda'
-    #print("ORIGINAL STRING: ", words)
-    #m = toBinary(words)
-    #print("WORDS TO BINARY: ", m)    
-    #decword = toString(m)
-    #print("DECWORD  DECODE: ",decword)
-    #print("WORDS TO BINARY: ",m)
-    #m = int(input("enter an int: "))
 
     decode = pow(c,d,n)
     print("ORIGINAL TEXT IN: ", decode)
