@@ -112,9 +112,9 @@ def decryptor(c, e):
     n = p * q
     phi = (p-1)*(q-1)
     
-    bezout = xgcd(e, phi)
+    extend_ea = xgcd(e, phi)
     
-    d = bezout[1]%phi
+    d = extend_ea[1]%phi
     
     #words = 'sda'
     #print("ORIGINAL STRING: ", words)
