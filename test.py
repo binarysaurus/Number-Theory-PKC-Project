@@ -78,8 +78,8 @@ def xgcd(b, n):
     return  b, x0, y0
 
 def encryptor(m):
-    p = 2**31-1
-    q = 2**61-1
+    p = 2**521-1
+    q = 2**607-1
     n = p * q
     phi = (p-1)*(q-1)
     
@@ -99,8 +99,8 @@ def encryptor(m):
     return c, e
 
 def decryptor(c, e):
-    p = 2**31-1
-    q = 2**61-1
+    p = 2**521-1
+    q = 2**607-1
     n = p * q
     phi = (p-1)*(q-1)
     
