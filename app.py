@@ -1,9 +1,9 @@
 
 from fractions import gcd
-from random import randint, randrange, getrandbits
+from random import randint, randrange
 import binascii
 import string
-from flask import Flask, render_template, flash, request, url_for, send_file, make_response, Response
+from flask import Flask, render_template, flash, request, url_for, make_response, Response
 from flask.ext.wtf import Form
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from wtforms.validators import Required
@@ -16,8 +16,6 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
-
-
 
 
 #p and q are mersenne primes.
@@ -161,9 +159,6 @@ def main():
                 flash('All the form fields are required. ')             
  
     return render_template('index.html', form=form)
-
-
-
 
 class ReusableForm(Form):
     str_encrypt = TextField('Number to encrypt :')
