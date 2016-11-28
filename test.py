@@ -17,30 +17,64 @@ app.config.from_object(__name__)
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=12345, debug=True)
+
+#p and q are mersenne primes.
 p = 2**3217-1
 q = 2**4253-1
 n = p * q
 phi = (p-1)*(q-1)
 
+def encryptor(m):
+    e = randint(0,phi)   
+    
+    while gcd(e, phi) != 1:
+        e = randint(0,phi)
+   
+    bezout = xgcd(e, phi)   
+    d = bezout[1]%phi   
+    c = pow(m,e,n)
 
-def text_to_bits(text, encoding='utf-8', errors='surrogatepass'):
-    bits = bin(int(binascii.hexlify(text.encode(encoding, errors)), 16))[2:]
-    return bits.zfill(8 * ((len(bits) + 7) // 8))
+    print("ORIGINAL BEFR: ", m)
+    print("CIPHERTEXT ENC : ", c)
+    
+    return c, e
 
-def text_from_bits(bits, encoding='utf-8', errors='surrogatepass'):
-    n = int(bits, 2)
-    return int2bytes(n).decode(encoding, errors)
+def decryptor(c, e):
+    phi = (p-1)*(q-1)  
+    extend_ea = xgcd(e, phi)  
+    d = extend_ea[1]%phi
+    decode = pow(c,d,n)
+   
+    print("ORIGINAL TEXT IN: ", decode)
+   
+    return decode
 
-def int2bytes(i):
-    hex_string = '%x' % i
-    n = len(hex_string)
-    return binascii.unhexlify(hex_string.zfill(n + (n & 1)))
+def is_prime(num):
+    if num > 1:
+        for i in range(2,num):
+            if (num % i) == 0:
+                return False;
+                break
+        else:
+            return True;
+    else:
+        return False;
 
-class ReusableForm(Form):
-    str_encrypt = TextField('Number to encrypt :')
-    str_decrypt = TextField('Encrypted text :')
-    str_key     = TextField('Key of Encrypted :')
+# EEA from:
+# https://goo.gl/J1yvGF
 
+def xgcd(b, n):
+    x0, x1, y0, y1 = 1, 0, 0, 1
+    
+    while n != 0:
+        q, b, n = b // n, n, b % n
+        x0, x1 = x1, x0 - q * x1
+        y0, y1 = y1, y0 - q * y1
+    
+    return  b, x0, y0
 
 @app.route('/umessage', methods=["POST"])
 def encryptmessage():
@@ -74,7 +108,6 @@ def encryptmessage():
 
     return render_template('download_enc.html')
 
-
 @app.route('/dmessage', methods=["POST"])
 def decryptmessage():
     cipher_text = request.files['data_file']
@@ -98,10 +131,8 @@ def decryptmessage():
         print(dec_dec_line)
         decrypted_file.write("%s" % dec_dec_line)
 
- 
     return render_template('download_dec.html')
            
-
 @app.route("/", methods=['GET', 'POST'])
 def main():
     form = ReusableForm(request.form)
@@ -135,54 +166,28 @@ def main():
  
     return render_template('index.html', form=form)
 
-def is_prime(num):
-    if num > 1:
-        for i in range(2,num):
-            if (num % i) == 0:
-                return False;
-                break
-        else:
-            return True;
-    else:
-        return False;
 
-#Extended euclidean algorithm from:
-# https://en.wikibooks.org/wiki/Algorithm_Implementation/Mathematics/Extended_Euclidean_algorithm
 
-def xgcd(b, n):
-    x0, x1, y0, y1 = 1, 0, 0, 1
+
+class ReusableForm(Form):
+    str_encrypt = TextField('Number to encrypt :')
+    str_decrypt = TextField('Encrypted text :')
+    str_key     = TextField('Key of Encrypted :')
+
+
+def text_to_bits(text, encoding='utf-8', errors='surrogatepass'):
+    bits = bin(int(binascii.hexlify(text.encode(encoding, errors)), 16))[2:]
     
-    while n != 0:
-        q, b, n = b // n, n, b % n
-        x0, x1 = x1, x0 - q * x1
-        y0, y1 = y1, y0 - q * y1
-    return  b, x0, y0
+    return bits.zfill(8 * ((len(bits) + 7) // 8))
 
-def encryptor(m):
-    e = randint(0,phi)   
+def text_from_bits(bits, encoding='utf-8', errors='surrogatepass'):
+    n = int(bits, 2)
     
-    while gcd(e, phi) != 1:
-        e = randint(0,phi)
-   
-    bezout = xgcd(e, phi)   
-    d = bezout[1]%phi   
-    c = pow(m,e,n)
+    return int2bytes(n).decode(encoding, errors)
 
-    print("ORIGINAL BEFR: ", m)
-    print("CIPHERTEXT ENC : ", c)
+def int2bytes(i):
+    hex_string = '%x' % i
+    n = len(hex_string)
     
-    return c, e
+    return binascii.unhexlify(hex_string.zfill(n + (n & 1)))
 
-def decryptor(c, e):
-    phi = (p-1)*(q-1)  
-    extend_ea = xgcd(e, phi)  
-    d = extend_ea[1]%phi
-    decode = pow(c,d,n)
-   
-    print("ORIGINAL TEXT IN: ", decode)
-   
-    return decode
-
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=12345, debug=True)
