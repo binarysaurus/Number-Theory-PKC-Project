@@ -165,7 +165,8 @@ class ReusableForm(Form):
     str_decrypt = TextField('Encrypted text :')
     str_key     = TextField('Key of Encrypted :')
 
-
+# Converters courtesy of J.F. Sebastien
+# http://stackoverflow.com/users/4279/j-f-sebastian
 def text_to_bits(text, encoding='utf-8', errors='surrogatepass'):
     bits = bin(int(binascii.hexlify(text.encode(encoding, errors)), 16))[2:]
     

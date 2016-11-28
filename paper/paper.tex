@@ -153,7 +153,7 @@ To test the program, input a number and click the first submit button, this will
 #This is the main app.py file, this runs the webserver
 
 from fractions import gcd
-from random import randint, randrange, getrandbits
+from random import randint, randrange
 import binascii
 import string
 from flask import Flask, render_template, flash, request, url_for, make_response, Response
@@ -169,8 +169,6 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
-
-
 
 
 #p and q are mersenne primes.
@@ -315,15 +313,13 @@ def main():
  
     return render_template('index.html', form=form)
 
-
-
-
 class ReusableForm(Form):
     str_encrypt = TextField('Number to encrypt :')
     str_decrypt = TextField('Encrypted text :')
     str_key     = TextField('Key of Encrypted :')
 
-
+# Converters courtesy of J.F. Sebastien
+# http://stackoverflow.com/users/4279/j-f-sebastian
 def text_to_bits(text, encoding='utf-8', errors='surrogatepass'):
     bits = bin(int(binascii.hexlify(text.encode(encoding, errors)), 16))[2:]
     
@@ -342,27 +338,24 @@ def int2bytes(i):
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=12345, debug=True)
+
 \end{minted}
 \subsubsection{HTML code for browsers}
 \begin{minted}{html}
 <!-this is the rendered form that constructs the main page when navigating to the site.->
 <!DOCTYPE html>
 <html lang="en">
-
+<title> Number Theory PKC </title> 
 <body>
     <h1>MATH 3307 - HONORS PROJECT - JOE CLOUD</h1>
     <h2>Fall 2016 - Section 001 (85596) - Epperson </h2>
-    <p> This program will encrypt and decrypt simple text files. 
-    Keep in mind due to the strength of the key that files with multiple 
-    lines will potentially take 20-30 seconds to encrypt and decrypt.</p>
-    <p> For the following file selector, choose a text file you'd like 
-    to encrypt, then submit.</p>
+    <p> This program will encrypt and decrypt simple text files. Keep in mind due to the strength of the key (7470 bits) that files with multiple lines will potentially take 20-30 seconds to process.</p>
+    <p> For the following file selector, choose a text file you'd like to encrypt, then click submit.</p>
     <form action="/umessage" method="post" enctype="multipart/form-data">
         <input type="file" name="data_file" />
         <input type="submit" />
     </form>
-    <p> To decrypt a file, please upload the ciphered text in the first box, 
-    and the key in the second box, then submit. </p>  
+    <p> To decrypt a file, please upload the ciphered text in the first box, and the key in the second box, then click submit. </p>  
      <form action="/dmessage" method="post" enctype="multipart/form-data">
         <input type="file" name="data_file" />
         <input type="file" name="key_file" />
@@ -372,9 +365,7 @@ if __name__ == "__main__":
 
 
 
-<p> Below is the first version of the program, which can only encrypt numbers. 
-Please be aware that you must clear the 'Number to encrypt' 
-box before submitting text to decrypt. </p>  
+<p> Below is the first version of the program, which can only encrypt numbers. Please be aware that you must clear the 'Number to encrypt' box before submitting text to decrypt. </p>  
     <form action="" method="post">
         {{ form.csrf }}
 
