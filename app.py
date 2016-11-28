@@ -18,8 +18,7 @@ app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=12345, debug=True)
+
 
 #p and q are mersenne primes.
 p = 2**3217-1
@@ -32,9 +31,7 @@ def encryptor(m):
     
     while gcd(e, phi) != 1:
         e = randint(0,phi)
-   
-    bezout = xgcd(e, phi)   
-    d = bezout[1]%phi   
+    
     c = pow(m,e,n)
 
     print("ORIGINAL BEFR: ", m)
@@ -43,7 +40,6 @@ def encryptor(m):
     return c, e
 
 def decryptor(c, e):
-    phi = (p-1)*(q-1)  
     extend_ea = xgcd(e, phi)  
     d = extend_ea[1]%phi
     decode = pow(c,d,n)
@@ -191,3 +187,5 @@ def int2bytes(i):
     
     return binascii.unhexlify(hex_string.zfill(n + (n & 1)))
 
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=12345, debug=True)
