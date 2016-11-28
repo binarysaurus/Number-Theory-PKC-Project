@@ -14,33 +14,13 @@ from functools import reduce
 DEBUG = True
 app = Flask(__name__)
 app.config.from_object(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 
 p = 2**3217-1
 q = 2**4253-1
 n = p * q
 phi = (p-1)*(q-1)
-
-
-def text2Int(text):
-    """Convert a text string into an integer"""
-    #return ''.join(str(ord(c)) for c in text)
-    return ''.join(format(ord(x), 'b') for x in text)
-
- 
-def int2Text(number, size):
-    """Convert an integer into a text string"""
-    text = "".join([chr((number >> j) & 0xff)
-                    for j in reversed(range(0, size << 3, 8))])
-    return text.lstrip("\x00")
-
-def modSize(mod):
-    """Return length (in bytes) of modulus"""
-    modSize = len("{:02x}".format(mod)) // 2
-    return modSize   
-
-
-
 
 
 def text_to_bits(text, encoding='utf-8', errors='surrogatepass'):
@@ -56,8 +36,6 @@ def int2bytes(i):
     n = len(hex_string)
     return binascii.unhexlify(hex_string.zfill(n + (n & 1)))
 
-
-
 class ReusableForm(Form):
     str_encrypt = TextField('Number to encrypt :')
     str_decrypt = TextField('Encrypted text :')
@@ -71,24 +49,58 @@ def encryptmessage():
         return "No file"
     f_contents = file.readlines()
     ciphered = []
+    keyed = []
     for line in f_contents:
-        line2 = line
-        line = line.decode("utf-8")
-        size = len(line2)
-        nbytes = min(len(line2), size - 1)
-        print(line)
-        numedline = text2Int(line)
-        print(numedline)
-        enc_line = encryptor(int(numedline))
-        ciphered.append(enc_line[0])
 
-'''
-    return Response(
-        ciphered,
-        mimetype="text",
-        headers={"Content-disposition":
-                 "attachment; filename=encrypted.txt"})
-                 '''
+        line = line.decode('utf-8')
+        intbin_line = int(text_to_bits(line))
+        print(intbin_line)
+        print('now using encryptor function\n--------\n')
+        enc_line = encryptor(intbin_line)
+        ciphered.append(enc_line[0])
+        keyed.append(enc_line[1])
+    print('GENERATED CIPHER TEXT\n')
+    encrypted_file = open('static/encrypted_text.txt', 'w')
+    for cipher in ciphered:
+        print(cipher)
+        encrypted_file.write("%s\n" % cipher)
+        print('\n')
+    print('GENERATED KEYS\n')
+    key_file = open('static/keys.txt', 'w')
+    for key in keyed:
+        print(key)
+        key_file.write("%s\n" % key)
+        print('\n')
+
+    return render_template('download_enc.html')
+
+
+@app.route('/dmessage', methods=["POST"])
+def decryptmessage():
+    cipher_text = request.files['data_file']
+    key_text = request.files['key_file']
+    if not cipher_text or not key_text:
+        return "must upload both the cipher text, and the key file"
+    ciph_cont = cipher_text.readlines()
+    key_cont = key_text.readlines()
+    assert len(ciph_cont) == len(key_cont), "Files have been tampered with"
+    dec_list = []
+    decrypted_file = open('static/decrypted_text.txt', 'w')
+    for i in range(len(ciph_cont)):
+        ciph_line = ciph_cont[i].decode('utf-8')
+        key_line = key_cont[i].decode('utf-8')
+        print(ciph_line)
+        print(key_line)
+        dec_line = decryptor(int(ciph_line), int(key_line))
+        
+        print(dec_line)
+        dec_dec_line = text_from_bits(str(dec_line))
+        print(dec_dec_line)
+        decrypted_file.write("%s" % dec_dec_line)
+
+ 
+    return render_template('download_dec.html')
+           
 
 @app.route("/", methods=['GET', 'POST'])
 def main():
