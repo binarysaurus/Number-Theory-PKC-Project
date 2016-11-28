@@ -6,39 +6,43 @@
 	<h2>Fall 2016 - Section 001 (85596) - Epperson </h2>
 	<p> This program will encrypt a string of digits up to 2^91.</p>
 	
+    <form action="/umessage" method="post" enctype="multipart/form-data">
+        <input type="file" name="data_file" />
+        <input type="submit" />
+    </form>
 
-        <form action="" method="post">
-            {{ form.csrf }}
- 
-            <div class="input text">
-                {{ form.str_encrypt.label }} {{ form.str_encrypt }}
-            </div>
- 
-            <div class="input submit">
-                <input type="submit" value="Submit" />
-            </div>
+    <form action="" method="post">
+        {{ form.csrf }}
 
-             <div class="input text">
-                {{ form.str_decrypt.label }} {{ form.str_decrypt }}
-            </div>
-            <div class="input text">
-                {{ form.str_key.label }} {{ form.str_key }}
-            </div>
- 
-            <div class="input submit">
-                <input type="submit" value="Submit" />
-            </div>
-        </form>
+        <div class="input text">
+            {{ form.str_encrypt.label }} {{ form.str_encrypt }}
+        </div>
 
-        	{% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                        <li>{{ message[1] }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
+        <div class="input submit">
+            <input type="submit" value="Submit" />
+        </div>
+
+        <div class="input text">
+            {{ form.str_decrypt.label }} {{ form.str_decrypt }}
+        </div>
+        <div class="input text">
+            {{ form.str_key.label }} {{ form.str_key }}
+        </div>
+
+        <div class="input submit">
+            <input type="submit" value="Submit" />
+        </div>
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message[1] }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
 
 </body>
 </html>
