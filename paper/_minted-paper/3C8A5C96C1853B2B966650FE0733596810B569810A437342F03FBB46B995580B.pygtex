@@ -1,0 +1,61 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZlt{}!\PYGZhy{}this is the rendered form that constructs the main page when navigating to the site.\PYGZhy{}\PYGZgt{}}
+\PYG{c+cp}{\PYGZlt{}!DOCTYPE html\PYGZgt{}}
+\PYG{p}{\PYGZlt{}}\PYG{n+nt}{html} \PYG{n+na}{lang}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}en\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+\PYG{p}{\PYGZlt{}}\PYG{n+nt}{title}\PYG{p}{\PYGZgt{}} Number Theory PKC \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{title}\PYG{p}{\PYGZgt{}}
+\PYG{p}{\PYGZlt{}}\PYG{n+nt}{body}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{h1}\PYG{p}{\PYGZgt{}}MATH 3307 \PYGZhy{} HONORS PROJECT \PYGZhy{} JOE CLOUD\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{h1}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{h2}\PYG{p}{\PYGZgt{}}Fall 2016 \PYGZhy{} Section 001 (85596) \PYGZhy{} Epperson \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{h2}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{p}\PYG{p}{\PYGZgt{}} This program will encrypt and decrypt simple text files. Keep in mind due to the strength of the key (7470 bits) that files with multiple lines will potentially take 20\PYGZhy{}30 seconds to process.\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{p}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{p}\PYG{p}{\PYGZgt{}} For the following file selector, choose a text file you\PYGZsq{}d like to encrypt, then click submit.\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{p}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{form} \PYG{n+na}{action}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}/umessage\PYGZdq{}} \PYG{n+na}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}post\PYGZdq{}} \PYG{n+na}{enctype}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}multipart/form\PYGZhy{}data\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+        \PYG{p}{\PYGZlt{}}\PYG{n+nt}{input} \PYG{n+na}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}file\PYGZdq{}} \PYG{n+na}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}data\PYGZus{}file\PYGZdq{}} \PYG{p}{/\PYGZgt{}}
+        \PYG{p}{\PYGZlt{}}\PYG{n+nt}{input} \PYG{n+na}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}submit\PYGZdq{}} \PYG{p}{/\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{form}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{p}\PYG{p}{\PYGZgt{}} To decrypt a file, please upload the ciphered text in the first box, and the key in the second box, then click submit. \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{p}\PYG{p}{\PYGZgt{}}
+     \PYG{p}{\PYGZlt{}}\PYG{n+nt}{form} \PYG{n+na}{action}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}/dmessage\PYGZdq{}} \PYG{n+na}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}post\PYGZdq{}} \PYG{n+na}{enctype}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}multipart/form\PYGZhy{}data\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+        \PYG{p}{\PYGZlt{}}\PYG{n+nt}{input} \PYG{n+na}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}file\PYGZdq{}} \PYG{n+na}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}data\PYGZus{}file\PYGZdq{}} \PYG{p}{/\PYGZgt{}}
+        \PYG{p}{\PYGZlt{}}\PYG{n+nt}{input} \PYG{n+na}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}file\PYGZdq{}} \PYG{n+na}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}key\PYGZus{}file\PYGZdq{}} \PYG{p}{/\PYGZgt{}}
+        \PYG{p}{\PYGZlt{}}\PYG{n+nt}{input} \PYG{n+na}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}submit\PYGZdq{}} \PYG{p}{/\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{form}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{br}\PYG{p}{\PYGZgt{}\PYGZlt{}}\PYG{n+nt}{br}\PYG{p}{\PYGZgt{}}
+
+
+
+\PYG{p}{\PYGZlt{}}\PYG{n+nt}{p}\PYG{p}{\PYGZgt{}} Below is the first version of the program, which can only encrypt numbers. Please be aware that you must clear the \PYGZsq{}Number to encrypt\PYGZsq{} box before submitting text to decrypt. \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{p}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{form} \PYG{n+na}{action}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}\PYGZdq{}} \PYG{n+na}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}post\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+        \PYGZob{}\PYGZob{} form.csrf \PYGZcb{}\PYGZcb{}
+
+        \PYG{p}{\PYGZlt{}}\PYG{n+nt}{div} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}input text\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+            \PYGZob{}\PYGZob{} form.str\PYGZus{}encrypt.label \PYGZcb{}\PYGZcb{} \PYGZob{}\PYGZob{} form.str\PYGZus{}encrypt \PYGZcb{}\PYGZcb{}
+        \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{div}\PYG{p}{\PYGZgt{}}
+
+        \PYG{p}{\PYGZlt{}}\PYG{n+nt}{div} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}input submit\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+            \PYG{p}{\PYGZlt{}}\PYG{n+nt}{input} \PYG{n+na}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}submit\PYGZdq{}} \PYG{n+na}{value}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}Submit\PYGZdq{}} \PYG{p}{/\PYGZgt{}}
+        \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{div}\PYG{p}{\PYGZgt{}}
+
+        \PYG{p}{\PYGZlt{}}\PYG{n+nt}{div} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}input text\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+            \PYGZob{}\PYGZob{} form.str\PYGZus{}decrypt.label \PYGZcb{}\PYGZcb{} \PYGZob{}\PYGZob{} form.str\PYGZus{}decrypt \PYGZcb{}\PYGZcb{}
+        \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{div}\PYG{p}{\PYGZgt{}}
+        \PYG{p}{\PYGZlt{}}\PYG{n+nt}{div} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}input text\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+            \PYGZob{}\PYGZob{} form.str\PYGZus{}key.label \PYGZcb{}\PYGZcb{} \PYGZob{}\PYGZob{} form.str\PYGZus{}key \PYGZcb{}\PYGZcb{}
+        \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{div}\PYG{p}{\PYGZgt{}}
+
+        \PYG{p}{\PYGZlt{}}\PYG{n+nt}{div} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}input submit\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+            \PYG{p}{\PYGZlt{}}\PYG{n+nt}{input} \PYG{n+na}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}submit\PYGZdq{}} \PYG{n+na}{value}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}Submit\PYGZdq{}} \PYG{p}{/\PYGZgt{}}
+        \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{div}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{form}\PYG{p}{\PYGZgt{}}
+
+    \PYGZob{}\PYGZpc{} with messages = get\PYGZus{}flashed\PYGZus{}messages(with\PYGZus{}categories=true) \PYGZpc{}\PYGZcb{}
+    \PYGZob{}\PYGZpc{} if messages \PYGZpc{}\PYGZcb{}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{ul}\PYG{p}{\PYGZgt{}}
+        \PYGZob{}\PYGZpc{} for message in messages \PYGZpc{}\PYGZcb{}
+        \PYG{p}{\PYGZlt{}}\PYG{n+nt}{li}\PYG{p}{\PYGZgt{}}\PYGZob{}\PYGZob{} message[1] \PYGZcb{}\PYGZcb{}\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{li}\PYG{p}{\PYGZgt{}}
+        \PYGZob{}\PYGZpc{} endfor \PYGZpc{}\PYGZcb{}
+    \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{ul}\PYG{p}{\PYGZgt{}}
+    \PYGZob{}\PYGZpc{} endif \PYGZpc{}\PYGZcb{}
+    \PYGZob{}\PYGZpc{} endwith \PYGZpc{}\PYGZcb{}
+
+\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{body}\PYG{p}{\PYGZgt{}}
+\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{html}\PYG{p}{\PYGZgt{}}
+\end{Verbatim}

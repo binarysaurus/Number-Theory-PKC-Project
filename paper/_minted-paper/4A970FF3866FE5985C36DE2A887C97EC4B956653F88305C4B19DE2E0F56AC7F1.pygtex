@@ -1,0 +1,190 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{}This is the main app.py file, this runs the webserver}
+
+\PYG{k+kn}{from} \PYG{n+nn}{fractions} \PYG{k+kn}{import} \PYG{n}{gcd}
+\PYG{k+kn}{from} \PYG{n+nn}{random} \PYG{k+kn}{import} \PYG{n}{randint}\PYG{p}{,} \PYG{n}{randrange}
+\PYG{k+kn}{import} \PYG{n+nn}{binascii}
+\PYG{k+kn}{import} \PYG{n+nn}{string}
+\PYG{k+kn}{from} \PYG{n+nn}{flask} \PYG{k+kn}{import} \PYG{n}{Flask}\PYG{p}{,} \PYG{n}{render\PYGZus{}template}\PYG{p}{,} \PYG{n}{flash}\PYG{p}{,} \PYG{n}{request}\PYG{p}{,} \PYG{n}{url\PYGZus{}for}\PYG{p}{,} \PYG{n}{make\PYGZus{}response}\PYG{p}{,} \PYG{n}{Response}
+\PYG{k+kn}{from} \PYG{n+nn}{flask.ext.wtf} \PYG{k+kn}{import} \PYG{n}{Form}
+\PYG{k+kn}{from} \PYG{n+nn}{wtforms} \PYG{k+kn}{import} \PYG{n}{Form}\PYG{p}{,} \PYG{n}{TextField}\PYG{p}{,} \PYG{n}{TextAreaField}\PYG{p}{,} \PYG{n}{validators}\PYG{p}{,} \PYG{n}{StringField}\PYG{p}{,} \PYG{n}{SubmitField}
+\PYG{k+kn}{from} \PYG{n+nn}{wtforms.validators} \PYG{k+kn}{import} \PYG{n}{Required}
+\PYG{k+kn}{from} \PYG{n+nn}{itertools} \PYG{k+kn}{import} \PYG{n}{repeat}
+\PYG{k+kn}{from} \PYG{n+nn}{functools} \PYG{k+kn}{import} \PYG{n+nb}{reduce}
+
+
+\PYG{n}{DEBUG} \PYG{o}{=} \PYG{n+nb+bp}{True}
+\PYG{n}{app} \PYG{o}{=} \PYG{n}{Flask}\PYG{p}{(}\PYG{n+nv+vm}{\PYGZus{}\PYGZus{}name\PYGZus{}\PYGZus{}}\PYG{p}{)}
+\PYG{n}{app}\PYG{o}{.}\PYG{n}{config}\PYG{o}{.}\PYG{n}{from\PYGZus{}object}\PYG{p}{(}\PYG{n+nv+vm}{\PYGZus{}\PYGZus{}name\PYGZus{}\PYGZus{}}\PYG{p}{)}
+\PYG{n}{app} \PYG{o}{=} \PYG{n}{Flask}\PYG{p}{(}\PYG{n+nv+vm}{\PYGZus{}\PYGZus{}name\PYGZus{}\PYGZus{}}\PYG{p}{,} \PYG{n}{static\PYGZus{}url\PYGZus{}path}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}/static\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{app}\PYG{o}{.}\PYG{n}{config}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}SECRET\PYGZus{}KEY\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}7d441f27d441f27567d441f2b6176a\PYGZsq{}}
+
+
+\PYG{c+c1}{\PYGZsh{}p and q are mersenne primes.}
+\PYG{n}{p} \PYG{o}{=} \PYG{l+m+mi}{2}\PYG{o}{**}\PYG{l+m+mi}{3217}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+\PYG{n}{q} \PYG{o}{=} \PYG{l+m+mi}{2}\PYG{o}{**}\PYG{l+m+mi}{4253}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+\PYG{n}{n} \PYG{o}{=} \PYG{n}{p} \PYG{o}{*} \PYG{n}{q}
+\PYG{n}{phi} \PYG{o}{=} \PYG{p}{(}\PYG{n}{p}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{n}{q}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{)}
+
+\PYG{k}{def} \PYG{n+nf}{encryptor}\PYG{p}{(}\PYG{n}{m}\PYG{p}{):}
+    \PYG{n}{e} \PYG{o}{=} \PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{phi}\PYG{p}{)}
+
+    \PYG{k}{while} \PYG{n}{gcd}\PYG{p}{(}\PYG{n}{e}\PYG{p}{,} \PYG{n}{phi}\PYG{p}{)} \PYG{o}{!=} \PYG{l+m+mi}{1}\PYG{p}{:}
+        \PYG{n}{e} \PYG{o}{=} \PYG{n}{randint}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{n}{phi}\PYG{p}{)}
+
+    \PYG{n}{c} \PYG{o}{=} \PYG{n+nb}{pow}\PYG{p}{(}\PYG{n}{m}\PYG{p}{,}\PYG{n}{e}\PYG{p}{,}\PYG{n}{n}\PYG{p}{)}
+
+    \PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}ORIGINAL BEFR: \PYGZdq{}}\PYG{p}{,} \PYG{n}{m}\PYG{p}{)}
+    \PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}CIPHERTEXT ENC : \PYGZdq{}}\PYG{p}{,} \PYG{n}{c}\PYG{p}{)}
+
+    \PYG{k}{return} \PYG{n}{c}\PYG{p}{,} \PYG{n}{e}
+
+\PYG{k}{def} \PYG{n+nf}{decryptor}\PYG{p}{(}\PYG{n}{c}\PYG{p}{,} \PYG{n}{e}\PYG{p}{):}
+    \PYG{n}{extend\PYGZus{}ea} \PYG{o}{=} \PYG{n}{xgcd}\PYG{p}{(}\PYG{n}{e}\PYG{p}{,} \PYG{n}{phi}\PYG{p}{)}
+    \PYG{n}{d} \PYG{o}{=} \PYG{n}{extend\PYGZus{}ea}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{\PYGZpc{}}\PYG{n}{phi}
+    \PYG{n}{decode} \PYG{o}{=} \PYG{n+nb}{pow}\PYG{p}{(}\PYG{n}{c}\PYG{p}{,}\PYG{n}{d}\PYG{p}{,}\PYG{n}{n}\PYG{p}{)}
+
+    \PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}ORIGINAL TEXT IN: \PYGZdq{}}\PYG{p}{,} \PYG{n}{decode}\PYG{p}{)}
+
+    \PYG{k}{return} \PYG{n}{decode}
+
+\PYG{k}{def} \PYG{n+nf}{is\PYGZus{}prime}\PYG{p}{(}\PYG{n}{num}\PYG{p}{):}
+    \PYG{k}{if} \PYG{n}{num} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{1}\PYG{p}{:}
+        \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{n}{num}\PYG{p}{):}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{num} \PYG{o}{\PYGZpc{}} \PYG{n}{i}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+                \PYG{k}{return} \PYG{n+nb+bp}{False}\PYG{p}{;}
+                \PYG{k}{break}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{k}{return} \PYG{n+nb+bp}{True}\PYG{p}{;}
+    \PYG{k}{else}\PYG{p}{:}
+        \PYG{k}{return} \PYG{n+nb+bp}{False}\PYG{p}{;}
+
+\PYG{c+c1}{\PYGZsh{} EEA from:}
+\PYG{c+c1}{\PYGZsh{} https://goo.gl/J1yvGF}
+
+\PYG{k}{def} \PYG{n+nf}{xgcd}\PYG{p}{(}\PYG{n}{b}\PYG{p}{,} \PYG{n}{n}\PYG{p}{):}
+    \PYG{n}{x0}\PYG{p}{,} \PYG{n}{x1}\PYG{p}{,} \PYG{n}{y0}\PYG{p}{,} \PYG{n}{y1} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}
+
+    \PYG{k}{while} \PYG{n}{n} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{:}
+        \PYG{n}{q}\PYG{p}{,} \PYG{n}{b}\PYG{p}{,} \PYG{n}{n} \PYG{o}{=} \PYG{n}{b} \PYG{o}{//} \PYG{n}{n}\PYG{p}{,} \PYG{n}{n}\PYG{p}{,} \PYG{n}{b} \PYG{o}{\PYGZpc{}} \PYG{n}{n}
+        \PYG{n}{x0}\PYG{p}{,} \PYG{n}{x1} \PYG{o}{=} \PYG{n}{x1}\PYG{p}{,} \PYG{n}{x0} \PYG{o}{\PYGZhy{}} \PYG{n}{q} \PYG{o}{*} \PYG{n}{x1}
+        \PYG{n}{y0}\PYG{p}{,} \PYG{n}{y1} \PYG{o}{=} \PYG{n}{y1}\PYG{p}{,} \PYG{n}{y0} \PYG{o}{\PYGZhy{}} \PYG{n}{q} \PYG{o}{*} \PYG{n}{y1}
+
+    \PYG{k}{return}  \PYG{n}{b}\PYG{p}{,} \PYG{n}{x0}\PYG{p}{,} \PYG{n}{y0}
+
+\PYG{n+nd}{@app.route}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}/umessage\PYGZsq{}}\PYG{p}{,} \PYG{n}{methods}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}POST\PYGZdq{}}\PYG{p}{])}
+\PYG{k}{def} \PYG{n+nf}{encryptmessage}\PYG{p}{():}
+    \PYG{n+nb}{file} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{files}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}data\PYGZus{}file\PYGZsq{}}\PYG{p}{]}
+    \PYG{k}{if} \PYG{o+ow}{not} \PYG{n+nb}{file}\PYG{p}{:}
+        \PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}No file\PYGZdq{}}
+    \PYG{n}{f\PYGZus{}contents} \PYG{o}{=} \PYG{n+nb}{file}\PYG{o}{.}\PYG{n}{readlines}\PYG{p}{()}
+    \PYG{n}{ciphered} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{n}{keyed} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{k}{for} \PYG{n}{line} \PYG{o+ow}{in} \PYG{n}{f\PYGZus{}contents}\PYG{p}{:}
+
+        \PYG{n}{line} \PYG{o}{=} \PYG{n}{line}\PYG{o}{.}\PYG{n}{decode}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}utf\PYGZhy{}8\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{intbin\PYGZus{}line} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{text\PYGZus{}to\PYGZus{}bits}\PYG{p}{(}\PYG{n}{line}\PYG{p}{))}
+        \PYG{k}{print}\PYG{p}{(}\PYG{n}{intbin\PYGZus{}line}\PYG{p}{)}
+        \PYG{k}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}now using encryptor function}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s1}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{enc\PYGZus{}line} \PYG{o}{=} \PYG{n}{encryptor}\PYG{p}{(}\PYG{n}{intbin\PYGZus{}line}\PYG{p}{)}
+        \PYG{n}{ciphered}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{enc\PYGZus{}line}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+        \PYG{n}{keyed}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{enc\PYGZus{}line}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])}
+    \PYG{k}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}GENERATED CIPHER TEXT}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{encrypted\PYGZus{}file} \PYG{o}{=} \PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}static/encrypted\PYGZus{}text.txt\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}w\PYGZsq{}}\PYG{p}{)}
+    \PYG{k}{for} \PYG{n}{cipher} \PYG{o+ow}{in} \PYG{n}{ciphered}\PYG{p}{:}
+        \PYG{k}{print}\PYG{p}{(}\PYG{n}{cipher}\PYG{p}{)}
+        \PYG{n}{encrypted\PYGZus{}file}\PYG{o}{.}\PYG{n}{write}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{\PYGZdq{}} \PYG{o}{\PYGZpc{}} \PYG{n}{cipher}\PYG{p}{)}
+        \PYG{k}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{k}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}GENERATED KEYS}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{key\PYGZus{}file} \PYG{o}{=} \PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}static/keys.txt\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}w\PYGZsq{}}\PYG{p}{)}
+    \PYG{k}{for} \PYG{n}{key} \PYG{o+ow}{in} \PYG{n}{keyed}\PYG{p}{:}
+        \PYG{k}{print}\PYG{p}{(}\PYG{n}{key}\PYG{p}{)}
+        \PYG{n}{key\PYGZus{}file}\PYG{o}{.}\PYG{n}{write}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{\PYGZdq{}} \PYG{o}{\PYGZpc{}} \PYG{n}{key}\PYG{p}{)}
+        \PYG{k}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+
+    \PYG{k}{return} \PYG{n}{render\PYGZus{}template}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}download\PYGZus{}enc.html\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n+nd}{@app.route}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}/dmessage\PYGZsq{}}\PYG{p}{,} \PYG{n}{methods}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}POST\PYGZdq{}}\PYG{p}{])}
+\PYG{k}{def} \PYG{n+nf}{decryptmessage}\PYG{p}{():}
+    \PYG{n}{cipher\PYGZus{}text} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{files}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}data\PYGZus{}file\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{key\PYGZus{}text} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{files}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}key\PYGZus{}file\PYGZsq{}}\PYG{p}{]}
+    \PYG{k}{if} \PYG{o+ow}{not} \PYG{n}{cipher\PYGZus{}text} \PYG{o+ow}{or} \PYG{o+ow}{not} \PYG{n}{key\PYGZus{}text}\PYG{p}{:}
+        \PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}must upload both the cipher text, and the key file\PYGZdq{}}
+    \PYG{n}{ciph\PYGZus{}cont} \PYG{o}{=} \PYG{n}{cipher\PYGZus{}text}\PYG{o}{.}\PYG{n}{readlines}\PYG{p}{()}
+    \PYG{n}{key\PYGZus{}cont} \PYG{o}{=} \PYG{n}{key\PYGZus{}text}\PYG{o}{.}\PYG{n}{readlines}\PYG{p}{()}
+    \PYG{k}{assert} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{ciph\PYGZus{}cont}\PYG{p}{)} \PYG{o}{==} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{key\PYGZus{}cont}\PYG{p}{),} \PYG{l+s+s2}{\PYGZdq{}Files have been tampered with\PYGZdq{}}
+    \PYG{n}{dec\PYGZus{}list} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{n}{decrypted\PYGZus{}file} \PYG{o}{=} \PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}static/decrypted\PYGZus{}text.txt\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}w\PYGZsq{}}\PYG{p}{)}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{ciph\PYGZus{}cont}\PYG{p}{)):}
+        \PYG{n}{ciph\PYGZus{}line} \PYG{o}{=} \PYG{n}{ciph\PYGZus{}cont}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{.}\PYG{n}{decode}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}utf\PYGZhy{}8\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{key\PYGZus{}line} \PYG{o}{=} \PYG{n}{key\PYGZus{}cont}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{.}\PYG{n}{decode}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}utf\PYGZhy{}8\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{print}\PYG{p}{(}\PYG{n}{ciph\PYGZus{}line}\PYG{p}{)}
+        \PYG{k}{print}\PYG{p}{(}\PYG{n}{key\PYGZus{}line}\PYG{p}{)}
+        \PYG{n}{dec\PYGZus{}line} \PYG{o}{=} \PYG{n}{decryptor}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{ciph\PYGZus{}line}\PYG{p}{),} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{key\PYGZus{}line}\PYG{p}{))}
+
+        \PYG{k}{print}\PYG{p}{(}\PYG{n}{dec\PYGZus{}line}\PYG{p}{)}
+        \PYG{n}{dec\PYGZus{}dec\PYGZus{}line} \PYG{o}{=} \PYG{n}{text\PYGZus{}from\PYGZus{}bits}\PYG{p}{(}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{dec\PYGZus{}line}\PYG{p}{))}
+        \PYG{k}{print}\PYG{p}{(}\PYG{n}{dec\PYGZus{}dec\PYGZus{}line}\PYG{p}{)}
+        \PYG{n}{decrypted\PYGZus{}file}\PYG{o}{.}\PYG{n}{write}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s2}{\PYGZdq{}} \PYG{o}{\PYGZpc{}} \PYG{n}{dec\PYGZus{}dec\PYGZus{}line}\PYG{p}{)}
+
+    \PYG{k}{return} \PYG{n}{render\PYGZus{}template}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}download\PYGZus{}dec.html\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n+nd}{@app.route}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}/\PYGZdq{}}\PYG{p}{,} \PYG{n}{methods}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}GET\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}POST\PYGZsq{}}\PYG{p}{])}
+\PYG{k}{def} \PYG{n+nf}{main}\PYG{p}{():}
+    \PYG{n}{form} \PYG{o}{=} \PYG{n}{ReusableForm}\PYG{p}{(}\PYG{n}{request}\PYG{o}{.}\PYG{n}{form}\PYG{p}{)}
+
+    \PYG{k}{print}\PYG{p}{(}\PYG{n}{form}\PYG{o}{.}\PYG{n}{errors}\PYG{p}{)}
+
+    \PYG{k}{if} \PYG{n}{request}\PYG{o}{.}\PYG{n}{method} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}POST\PYGZsq{}}\PYG{p}{:}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n}{request}\PYG{o}{.}\PYG{n}{form}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}str\PYGZus{}encrypt\PYGZsq{}}\PYG{p}{]):}
+            \PYG{n}{str\PYGZus{}encrypt}\PYG{o}{=}\PYG{n}{request}\PYG{o}{.}\PYG{n}{form}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}str\PYGZus{}encrypt\PYGZsq{}}\PYG{p}{]}
+
+            \PYG{k}{print}\PYG{p}{(}\PYG{n}{str\PYGZus{}encrypt}\PYG{p}{)}
+
+            \PYG{k}{if} \PYG{n}{form}\PYG{o}{.}\PYG{n}{validate}\PYG{p}{():}
+
+                \PYG{n}{encrypted\PYGZus{}data} \PYG{o}{=} \PYG{n}{encryptor}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{str\PYGZus{}encrypt}\PYG{p}{))}
+                \PYG{n}{flash}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Encrypted Text: \PYGZsq{}}\PYG{o}{+}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{encrypted\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]))}
+                \PYG{n}{flash}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Key:            \PYGZsq{}}\PYG{o}{+}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{encrypted\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]))}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{n}{flash}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}All the form fields are required. \PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{elif}\PYG{p}{(}\PYG{n}{request}\PYG{o}{.}\PYG{n}{form}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}str\PYGZus{}decrypt\PYGZsq{}}\PYG{p}{]):}
+            \PYG{n}{str\PYGZus{}decrypt}\PYG{o}{=}\PYG{n}{request}\PYG{o}{.}\PYG{n}{form}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}str\PYGZus{}decrypt\PYGZsq{}}\PYG{p}{]}
+            \PYG{n}{str\PYGZus{}key} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{form}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}str\PYGZus{}key\PYGZsq{}}\PYG{p}{]}
+
+            \PYG{k}{print}\PYG{p}{(}\PYG{n}{str\PYGZus{}decrypt}\PYG{p}{)}
+
+            \PYG{k}{if} \PYG{n}{form}\PYG{o}{.}\PYG{n}{validate}\PYG{p}{():}
+                \PYG{n}{decrypted\PYGZus{}data} \PYG{o}{=} \PYG{n}{decryptor}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{str\PYGZus{}decrypt}\PYG{p}{),} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{str\PYGZus{}key}\PYG{p}{))}
+                \PYG{n}{flash}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Decrypted Text: \PYGZsq{}}\PYG{o}{+}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{decrypted\PYGZus{}data}\PYG{p}{))}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{n}{flash}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}All the form fields are required. \PYGZsq{}}\PYG{p}{)}
+
+    \PYG{k}{return} \PYG{n}{render\PYGZus{}template}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}index.html\PYGZsq{}}\PYG{p}{,} \PYG{n}{form}\PYG{o}{=}\PYG{n}{form}\PYG{p}{)}
+
+\PYG{k}{class} \PYG{n+nc}{ReusableForm}\PYG{p}{(}\PYG{n}{Form}\PYG{p}{):}
+    \PYG{n}{str\PYGZus{}encrypt} \PYG{o}{=} \PYG{n}{TextField}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Number to encrypt :\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{str\PYGZus{}decrypt} \PYG{o}{=} \PYG{n}{TextField}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Encrypted text :\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{str\PYGZus{}key}     \PYG{o}{=} \PYG{n}{TextField}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Key of Encrypted :\PYGZsq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Converters courtesy of J.F. Sebastien}
+\PYG{c+c1}{\PYGZsh{} http://stackoverflow.com/users/4279/j\PYGZhy{}f\PYGZhy{}sebastian}
+\PYG{k}{def} \PYG{n+nf}{text\PYGZus{}to\PYGZus{}bits}\PYG{p}{(}\PYG{n}{text}\PYG{p}{,} \PYG{n}{encoding}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}utf\PYGZhy{}8\PYGZsq{}}\PYG{p}{,} \PYG{n}{errors}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}surrogatepass\PYGZsq{}}\PYG{p}{):}
+    \PYG{n}{bits} \PYG{o}{=} \PYG{n+nb}{bin}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{binascii}\PYG{o}{.}\PYG{n}{hexlify}\PYG{p}{(}\PYG{n}{text}\PYG{o}{.}\PYG{n}{encode}\PYG{p}{(}\PYG{n}{encoding}\PYG{p}{,} \PYG{n}{errors}\PYG{p}{)),} \PYG{l+m+mi}{16}\PYG{p}{))[}\PYG{l+m+mi}{2}\PYG{p}{:]}
+
+    \PYG{k}{return} \PYG{n}{bits}\PYG{o}{.}\PYG{n}{zfill}\PYG{p}{(}\PYG{l+m+mi}{8} \PYG{o}{*} \PYG{p}{((}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{bits}\PYG{p}{)} \PYG{o}{+} \PYG{l+m+mi}{7}\PYG{p}{)} \PYG{o}{//} \PYG{l+m+mi}{8}\PYG{p}{))}
+
+\PYG{k}{def} \PYG{n+nf}{text\PYGZus{}from\PYGZus{}bits}\PYG{p}{(}\PYG{n}{bits}\PYG{p}{,} \PYG{n}{encoding}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}utf\PYGZhy{}8\PYGZsq{}}\PYG{p}{,} \PYG{n}{errors}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}surrogatepass\PYGZsq{}}\PYG{p}{):}
+    \PYG{n}{n} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{bits}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{)}
+
+    \PYG{k}{return} \PYG{n}{int2bytes}\PYG{p}{(}\PYG{n}{n}\PYG{p}{)}\PYG{o}{.}\PYG{n}{decode}\PYG{p}{(}\PYG{n}{encoding}\PYG{p}{,} \PYG{n}{errors}\PYG{p}{)}
+
+\PYG{k}{def} \PYG{n+nf}{int2bytes}\PYG{p}{(}\PYG{n}{i}\PYG{p}{):}
+    \PYG{n}{hex\PYGZus{}string} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+si}{\PYGZpc{}x}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o}{\PYGZpc{}} \PYG{n}{i}
+    \PYG{n}{n} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{hex\PYGZus{}string}\PYG{p}{)}
+
+    \PYG{k}{return} \PYG{n}{binascii}\PYG{o}{.}\PYG{n}{unhexlify}\PYG{p}{(}\PYG{n}{hex\PYGZus{}string}\PYG{o}{.}\PYG{n}{zfill}\PYG{p}{(}\PYG{n}{n} \PYG{o}{+} \PYG{p}{(}\PYG{n}{n} \PYG{o}{\PYGZam{}} \PYG{l+m+mi}{1}\PYG{p}{)))}
+
+\PYG{k}{if} \PYG{n+nv+vm}{\PYGZus{}\PYGZus{}name\PYGZus{}\PYGZus{}} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}\PYGZus{}\PYGZus{}main\PYGZus{}\PYGZus{}\PYGZdq{}}\PYG{p}{:}
+    \PYG{n}{app}\PYG{o}{.}\PYG{n}{run}\PYG{p}{(}\PYG{n}{host}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}0.0.0.0\PYGZsq{}}\PYG{p}{,} \PYG{n}{port}\PYG{o}{=}\PYG{l+m+mi}{12345}\PYG{p}{,} \PYG{n}{debug}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+\end{Verbatim}
