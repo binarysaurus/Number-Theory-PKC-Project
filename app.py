@@ -4,7 +4,7 @@ from random import randint, randrange
 import binascii
 import string
 from flask import Flask, render_template, flash, request, url_for, make_response, Response
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from wtforms.validators import Required
 from itertools import repeat
