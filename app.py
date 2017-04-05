@@ -184,4 +184,4 @@ def int2bytes(i):
     return binascii.unhexlify(hex_string.zfill(n + (n & 1)))
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=12345, debug=True)
+    app.run(host='0.0.0.0', port=12345, debug=False)
