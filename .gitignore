@@ -1,2 +1,5 @@
-static/*
-!static/.gitkeep
+webapp/static/*
+!webapp/static/.gitkeep
+
+__pycache__
+*.pyc
